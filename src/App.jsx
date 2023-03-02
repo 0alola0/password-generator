@@ -2,7 +2,6 @@ import React from 'react';
 import {useState} from 'react';
 import './style.css';
 import CopyIcon from './assets/images/icon-copy.svg';
-import ArrowIcon from './assets/images/icon-arrow-right.svg';
 import Checkbox from './components/Checkbox';
 import RangeSlider from './components/RangeSlider';
 
@@ -25,15 +24,12 @@ function App() {
             ...password,
             length: val,
         })
-        console.log(password.length)
     }
     const handleUppercase = () => {
         setPassword({
             ...password,
             uppercase: !password.uppercase,
         })
-        console.log(password.length)
-
     }
     const handleStyle = (v) => {
         setPassword({
@@ -66,7 +62,6 @@ function App() {
         const symbolsArr = ["!","@","#","$","%","^","&","*","(",")","_","-","+","="]
         const lowercaseArr = 'abcdefghijklmnopqrstuvwxyz'.split('')
         const uppercaseArr = lowercaseArr.map((l)=> l.toUpperCase())
-        console.log(lowercaseArr, numbersArr, uppercaseArr, symbolsArr)
         const {length, uppercase, lowercase, numbers, symbols} = password
 
         const generateResult = (length, uppercase, lowercase, numbers, symbols)=>{
@@ -78,7 +73,6 @@ function App() {
             ]
             const shuffle = (array) => array.sort(()=> Math.random()-0.5)
             const characters = shuffle(available).slice(0, length)
-            console.log(length, "length")
             if((length < 5) || (!uppercase && !numbers && !symbols)){
                 password.strength = "TOO WEAK!"
                 handleStyle('indicator too-weak')
@@ -97,7 +91,7 @@ function App() {
             return characters
         }
         
-        console.log(generateResult(length, uppercase, lowercase, numbers, symbols))
+        generateResult(length, uppercase, lowercase, numbers, symbols)
 
 
     }
@@ -112,11 +106,10 @@ function App() {
                     <button className="copy-btn" onClick={(e)=>{
                         e.preventDefault()
                         if(password.length>0){
-                            console.log("big pass")
                             navigator.clipboard.writeText(handleText)
                             setCopied(true)
                             setTimeout(()=>{
-                                setCopied(false)
+                            setCopied(false)
                             },2000)
                         }
                     }}>{copied?'Copied': ''} <img src={CopyIcon} alt="copy-icon" /></button>
