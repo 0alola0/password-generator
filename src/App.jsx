@@ -71,22 +71,30 @@ function App() {
                 ...(numbers? numbersArr : []),
                 ...(symbols? symbolsArr : [])
             ]
+            let checks = 0
+            //ამ ცვლადით აღვნიშნავ რამდენი ელემენტია მონიშნული რომ მაგით შევამოწმო
+            checks = uppercase + lowercase + symbols + numbers
             const shuffle = (array) => array.sort(()=> Math.random()-0.5)
             const characters = shuffle(available).slice(0, length)
-            if((length < 5) || (!uppercase && !numbers && !symbols)){
+            //თუ 5-ზე პატარაა (რამდენი სახის სიმბოლოც არ უნდა იყოს) ან 7-ზე ნაკლები და მარტო 1 სახის სიმბოლო Too weak არის 
+            if(length < 1 || checks <1){
+            }else if(length < 5 || checks<2 && length<7){
                 password.strength = "TOO WEAK!"
                 handleStyle('indicator too-weak')
-            }else if((length < 7) || (!numbers && !symbols)){
+            //თუ 7-ზე პატარაა (2-ზე მეტი სახის სიმბოლოთი) ან 10-ზე ნპატარა და მარტო 2 სახის სიმბოლო weak არის 
+            }else if((length<7 && checks>2) || (checks<4 && length<10)){
                 password.strength = "WEAK"
                 handleStyle('indicator weak')
-            }else if(length < 11 || !symbols){
+            //თუ 10-ზე პატარაა (3-ზე მეტი სახის სიმბოლოთი) ან 10-ზე დიდი და მარტო 3 სახის სიმბოლო medium არის 
+
+            }else if((length<10 && checks >3) || (checks<4 && length>9)){
                 password.strength = "MEDIUM"
                 handleStyle('indicator medium')
+            //დანარჩენი სთრონგია
             }else{
                 password.strength = "STRONG"
                 handleStyle('indicator strong')
             }
-            // handleStrong('WEAK!')
             setHandleText(characters.join(''))
             return characters
         }
